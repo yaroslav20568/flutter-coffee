@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_coffee/bottom_tabs_icons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,54 +16,36 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      home: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(),
+          bottomNavigationBar: const TabBar(
+            indicator: UnderlineTabIndicator(
+              borderSide: BorderSide(width: 0.0),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+            tabs: [
+              Tab(icon: Icon(BottomTabsIcons.home, size: 26)),
+              Tab(icon: Icon(BottomTabsIcons.cart, size: 26)),
+              Tab(icon: Icon(BottomTabsIcons.favorites, size: 26)),
+              Tab(icon: Icon(BottomTabsIcons.notifications, size: 29)),
+            ],
+            labelColor: Color(0xFFFFFFFF),
+            unselectedLabelColor: Color(0XFF746763),
+            dividerHeight: 78,
+            dividerColor: Color(0xFF22151F),
+            labelPadding: EdgeInsets.only(top: 12, bottom: 12),
+          ),
+          body: const TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              Tab(icon: Icon(BottomTabsIcons.home)),
+              Tab(icon: Icon(BottomTabsIcons.cart)),
+              Tab(icon: Icon(BottomTabsIcons.favorites)),
+              Tab(icon: Icon(BottomTabsIcons.notifications)),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

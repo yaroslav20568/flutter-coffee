@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_coffee/bottom_tabs_icons.dart';
+import 'package:flutter_coffee/pages/favorites_screen.dart';
+import 'package:flutter_coffee/pages/home_screen.dart';
+import 'package:flutter_coffee/pages/cart_screen.dart';
+import 'package:flutter_coffee/pages/notifications_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,14 +17,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        scaffoldBackgroundColor: const Color(0xFF201520),
         useMaterial3: true,
       ),
-      home: DefaultTabController(
+      debugShowCheckedModeBanner: false,
+      home: const DefaultTabController(
         length: 4,
         child: Scaffold(
-          appBar: AppBar(),
-          bottomNavigationBar: const TabBar(
+          bottomNavigationBar: TabBar(
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(width: 0.0),
             ),
@@ -36,13 +41,13 @@ class MyApp extends StatelessWidget {
             dividerColor: Color(0xFF22151F),
             labelPadding: EdgeInsets.only(top: 12, bottom: 12),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
-              Tab(icon: Icon(BottomTabsIcons.home)),
-              Tab(icon: Icon(BottomTabsIcons.cart)),
-              Tab(icon: Icon(BottomTabsIcons.favorites)),
-              Tab(icon: Icon(BottomTabsIcons.notifications)),
+              HomeScreen(),
+              CartScreen(),
+              FavoritesScreen(),
+              NotificationsScreen(),
             ],
           ),
         ),

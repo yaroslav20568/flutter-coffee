@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_coffee/bottom_tabs_icons.dart';
 
 class CatalogCoffeeCard extends StatelessWidget {
-  const CatalogCoffeeCard({Key? key}) : super(key: key);
+  final String name;
+  final String urlImage;
+  final int price;
+  final double rating;
+  const CatalogCoffeeCard({Key? key, required this.name, required this.urlImage, required this.price, required this.rating}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +25,8 @@ class CatalogCoffeeCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    'assets/images/coffee/cinnamon-cocoa.jpg',
+                  child: Image.network(
+                    urlImage,
                     width: 111,
                     height: 111,
                     fit: BoxFit.cover,
@@ -38,14 +42,14 @@ class CatalogCoffeeCard extends StatelessWidget {
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomRight: Radius.circular(15), bottomLeft: Radius.circular(1),), 
                       color: Color.fromRGBO(65, 65, 65, 0.8),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon(BottomTabsIcons.star, size: 11, color: Color(0xFFD3A601),),
-                        SizedBox(width: 4.5,),
+                        const Icon(BottomTabsIcons.star, size: 11, color: Color(0xFFD3A601),),
+                        const SizedBox(width: 4.5,),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 3),
-                          child: Text('4.5', style: TextStyle(fontFamily: 'Rosarivo', color: Color(0xFFFFFFFF), fontSize: 10.0),),
+                          padding: const EdgeInsets.only(bottom: 3),
+                          child: Text('$rating', style: const TextStyle(fontFamily: 'Rosarivo', color: Color(0xFFFFFFFF), fontSize: 10.0),),
                         )
                       ],
                     ),
@@ -54,7 +58,7 @@ class CatalogCoffeeCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8,),
-            const Text('Cinnamon & Cocoa', style: TextStyle(fontFamily: 'Rosarivo', color: Color(0xFFFFFFFF), fontSize: 14.0),),
+            Text(name, style: const TextStyle(fontFamily: 'Rosarivo', color: Color(0xFFFFFFFF), fontSize: 14.0),),
             const SizedBox(height: 13,),
             Container(
               padding: const EdgeInsets.only(left: 22),
@@ -65,7 +69,7 @@ class CatalogCoffeeCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text('₹99', style: TextStyle(fontFamily: 'OpenSans', color: Color(0xFFFFFFFF), fontSize: 16.0, fontWeight: FontWeight.w600),),
+                  Text('₹$price', style: const TextStyle(fontFamily: 'OpenSans', color: Color(0xFFFFFFFF), fontSize: 16.0, fontWeight: FontWeight.w600),),
                   SizedBox(
                     width: 39,
                     height: 39,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_coffee/bloc/home_coffees/home_coffees_cubit.dart';
 import 'package:flutter_coffee/bottom_tabs_icons.dart';
 import 'package:flutter_coffee/pages/favorites_screen.dart';
 import 'package:flutter_coffee/pages/home_screen.dart';
@@ -22,10 +24,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const DefaultTabController(
+      home: DefaultTabController(
         length: 4,
         child: Scaffold(
-          bottomNavigationBar: TabBar(
+          bottomNavigationBar: const TabBar(
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(width: 0.0),
             ),
@@ -42,12 +44,15 @@ class MyApp extends StatelessWidget {
             labelPadding: EdgeInsets.only(top: 12, bottom: 12),
           ),
           body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: [
-              HomeScreen(),
-              CartScreen(),
-              FavoritesScreen(),
-              NotificationsScreen(),
+              BlocProvider(
+                create: (_) => HomeCoffeesCubit(),
+                child: const HomeScreen(),
+              ),
+              const CartScreen(),
+              const FavoritesScreen(),
+              const NotificationsScreen(),
             ],
           ),
         ),

@@ -15,22 +15,28 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-List<String> coffeeCategories = [
-  'Flat White',
-  'Espresso',
-  'Americano',
-  'Latte',
-  'Cappuccino'
-];
+List<String> coffeeCategories = ['Flat White', 'Espresso', 'Americano', 'Latte', 'Cappuccino'];
 
 class _HomeScreenState extends State<HomeScreen> {
   String activeCategory = 'Cappuccino';
   String inputValue = '';
+  final inputControler = TextEditingController();
   Timer? _debounce;
+
+  changeInputValue() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      setState(() {
+        inputValue = inputControler.text;
+      });
+      context.read<HomeCoffeesCubit>().loadCoffees(activeCategory);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    inputControler.addListener(changeInputValue);
     context.read<HomeCoffeesCubit>().loadCoffees(activeCategory);
   }
 
@@ -41,20 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<HomeCoffeesCubit>().loadCoffees(activeCategory);
   }
 
-  void changeInputValue(name) {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      setState(() {
-        inputValue = name;
-      });
-      context.read<HomeCoffeesCubit>().loadCoffees(activeCategory);
-    });
-  }
-
   List<dynamic> filteredCoffees(List<dynamic> coffees) {
     return coffees.where((coffee) => 
       coffee['name'].toLowerCase().contains(inputValue.toLowerCase())
     ).toList();
+  }
+
+  void resetInputValue() {
+    inputControler.text = '';
   }
 
   @override
@@ -94,18 +94,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Flexible(
                               child: TextField(
-                                onChanged: changeInputValue,
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(Icons.search, color: Color.fromRGBO(239, 227, 200, 0.5),),
+                                controller: inputControler,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.search, color: Color.fromRGBO(239, 227, 200, 0.5),),
                                   hintText: 'Browse your favourite coffee...',
-                                  hintStyle: TextStyle(fontFamily: 'Rosarivo', color: Color.fromRGBO(239, 227, 200, 0.5), fontSize: 14.0,),
+                                  hintStyle: const TextStyle(fontFamily: 'Rosarivo', color: Color.fromRGBO(239, 227, 200, 0.5), fontSize: 14.0,),
                                   filled: true,
-                                  fillColor: Color(0xFF171017),
-                                  contentPadding: EdgeInsets.only(top: 10, right: 15, bottom: 10, left: 60,),
-                                  border: OutlineInputBorder(
+                                  fillColor: const Color(0xFF171017),
+                                  contentPadding: const EdgeInsets.only(top: 10, right: 15, bottom: 10, left: 60,),
+                                  border: const OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.all(Radius.circular(10)),
                                   ),
+                                  suffixIcon: inputValue != '' ? IconButton(
+                                    onPressed: resetInputValue,
+                                    icon: const Icon(Icons.clear, color: Color.fromRGBO(239, 227, 200, 0.5),),
+                                  ) : null
                                 ),
                                 style: const TextStyle(fontFamily: 'Rosarivo', color: Color(0xFF83796F), fontSize: 14.0,),
                               ),

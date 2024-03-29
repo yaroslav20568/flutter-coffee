@@ -69,7 +69,7 @@ class CatalogCoffeeCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('₹$price', style: const TextStyle(fontFamily: 'OpenSans', color: Color(0xFFFFFFFF), fontSize: 16.0, fontWeight: FontWeight.w600),),
+                  Text('€$price', style: const TextStyle(fontFamily: 'OpenSans', color: Color(0xFFFFFFFF), fontSize: 16.0, fontWeight: FontWeight.w600),),
                   SizedBox(
                     width: 39,
                     height: 39,

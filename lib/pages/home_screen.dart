@@ -6,7 +6,10 @@ import 'package:flutter_coffee/bloc/home_coffees/home_coffees_cubit.dart';
 import 'package:flutter_coffee/bloc/home_coffees/home_coffees_state.dart';
 import 'package:flutter_coffee/components/catalog_coffee_card.dart';
 import 'package:flutter_coffee/components/category_menu_item.dart';
-import 'package:flutter_coffee/components/spin_home.dart';
+import 'package:flutter_coffee/components/header.dart';
+import 'package:flutter_coffee/components/spin.dart';
+
+List<String> coffeeCategories = ['Flat White', 'Espresso', 'Americano', 'Latte', 'Cappuccino'];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,8 +17,6 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
-
-List<String> coffeeCategories = ['Flat White', 'Espresso', 'Americano', 'Latte', 'Cappuccino'];
 
 class _HomeScreenState extends State<HomeScreen> {
   String activeCategory = 'Cappuccino';
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocBuilder<HomeCoffeesCubit, OperatorState>(
+    return Scaffold(body: BlocBuilder<HomeCoffeesCubit, HomeCofeesState>(
       builder: (context, state) {
         return SafeArea(
           child: Stack(
@@ -71,24 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text('déjà', style: TextStyle(fontFamily: 'Rosarivo', color: Color.fromRGBO(239, 227, 200, 0.5), fontSize: 36),),
-                                Text('Brew', style: TextStyle(fontFamily: 'Rosarivo', color: Color(0xFFEFE3C8), fontSize: 48, height: .7),),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Image.asset("assets/images/logo.png"),
-                              ],
-                            ),
-                          ],
-                        ),
+                        const Header(),
                         const SizedBox(height: 30,),
                         Row(
                           children: <Widget>[
@@ -109,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   suffixIcon: inputValue != '' ? IconButton(
                                     onPressed: resetInputValue,
                                     icon: const Icon(Icons.clear, color: Color.fromRGBO(239, 227, 200, 0.5),),
-                                  ) : null
+                                  ) : null,
                                 ),
                                 style: const TextStyle(fontFamily: 'Rosarivo', color: Color(0xFF83796F), fontSize: 14.0,),
                               ),
@@ -123,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             spacing: 16,
                             runSpacing: 16,
                             children: state.isLoading == true ? 
-                              [const SpinHome()] : 
+                              [const Spin()] : 
                               filteredCoffees(state.coffees).isEmpty ? 
                               [const Text('No coffees find', style: TextStyle(fontFamily: 'Rosarivo', color: Color(0xFFFFFFFF), fontSize: 14.0),),] : 
                               filteredCoffees(state.coffees).map((coffee) => 

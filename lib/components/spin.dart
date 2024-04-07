@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class SpinHome extends StatelessWidget {
-  const SpinHome({Key? key}) : super(key: key);
+class Spin extends StatelessWidget {
+  const Spin({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:badges/badges.dart' as badges;
 import 'package:flutter_coffee/bloc/home_coffees/home_coffees_cubit.dart';
+import 'package:flutter_coffee/bloc/notifications/notifications_cubit.dart';
 import 'package:flutter_coffee/bottom_tabs_icons.dart';
 import 'package:flutter_coffee/pages/favorites_screen.dart';
 import 'package:flutter_coffee/pages/home_screen.dart';
@@ -35,6 +37,11 @@ class MyApp extends StatelessWidget {
               Tab(icon: Icon(BottomTabsIcons.home, size: 26)),
               Tab(icon: Icon(BottomTabsIcons.cart, size: 26)),
               Tab(icon: Icon(BottomTabsIcons.favorites, size: 26)),
+              // Tab(child: badges.Badge(
+              //   badgeContent: Text('3', style: TextStyle(fontFamily: 'OpenSans', color: Color(0xFFFFFFFF), fontSize: 14.0),),
+              //   badgeStyle: badges.BadgeStyle(padding: EdgeInsets.all(6), badgeColor: Color(0xFF355555),),
+              //   child: Tab(icon: Icon(BottomTabsIcons.notifications, size: 29)),
+              // ),),
               Tab(icon: Icon(BottomTabsIcons.notifications, size: 29)),
             ],
             labelColor: Color(0xFFEFE3C8),
@@ -52,7 +59,11 @@ class MyApp extends StatelessWidget {
               ),
               const CartScreen(),
               const FavoritesScreen(),
-              const NotificationsScreen(),
+              // const NotificationsScreen(),
+              BlocProvider(
+                create: (_) => NotificationsCubit(),
+                child: const NotificationsScreen(),
+              ),
             ],
           ),
         ),
